@@ -10,7 +10,7 @@ import (
 	"strings"
 	"time"
 
-	raft "github.com/caiopo/pontoon"
+	raft "github.com/hvescovi/pontoon"
 )
 
 func main() {
