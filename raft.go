@@ -1,5 +1,4 @@
 package main
-
 import (
 	"fmt"
 	"io/ioutil"
@@ -9,10 +8,8 @@ import (
 	"os"
 	"strings"
 	"time"
-
 	raft "github.com/hvescovi/pontoon"
 )
-
 func main() {
 	if raft.RunningInKubernetes {
 		// por enquanto
@@ -25,7 +22,6 @@ func main() {
 		if myip == "badIPReturn" {
 			myip = "localhost"
 		}
-
 		transport := &raft.HTTPTransport{Address: myip + raft.PORT}
 		logger := &raft.Log{}
 		applyer := &raft.StateMachine{}
@@ -42,7 +38,6 @@ func main() {
 
 			fmt.Print("IPs Kube: ")
 			fmt.Println(ipsKube)
-
 			fmt.Print("IPs Added: ")
 			fmt.Println(ipsAdded)
 
@@ -52,7 +47,6 @@ func main() {
 					ipsAdded = append(ipsAdded, (ipKube))
 				}
 			}
-
 			time.Sleep(time.Second)
 		}
 	} else {
@@ -71,13 +65,11 @@ func main() {
 		for _, ip := range os.Args[2:] {
 			node.AddToCluster(ip + raft.PORT)
 		}
-
 		for {
 			time.Sleep(time.Second)
 		}
 	}
 }
-
 func find(needle string, haystack []string) bool {
 	for _, h := range haystack {
 		if needle == h {
@@ -86,7 +78,6 @@ func find(needle string, haystack []string) bool {
 	}
 	return false
 }
-
 func getIPsFromKubernetes() []string {
 	resp, err := http.Get("http://" + raft.KubernetesAPIServer + "/api/v1/endpoints")
 
@@ -100,7 +91,6 @@ func getIPsFromKubernetes() []string {
 		// raft.Debug += fmt.Sprintln("ERROR reading data from endpoints: ", err2.Error())
 		return nil
 	}
-
 	content := string(contentByte)
 
 	replicas := make([]string, 0)
@@ -117,7 +107,6 @@ func getIPsFromKubernetes() []string {
 
 	return replicas
 }
-
 func getMyIP(firstChars string) string {
 	addrs, err := net.InterfaceAddrs()
 	if err != nil {
@@ -136,6 +125,7 @@ func getMyIP(firstChars string) string {
 	}
 	return "badIPReturn"
 }
+
 
 // 	for {
 
