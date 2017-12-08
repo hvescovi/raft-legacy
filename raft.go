@@ -3,7 +3,7 @@ package main
 import (
 	"fmt"
 	"io/ioutil"
-	"log"
+	//"log"
 	"net"
 	"net/http"
 	"os"
@@ -15,7 +15,8 @@ import (
 
 func main() {
 	if raft.RunningInKubernetes {
-		log.SetOutput(ioutil.Discard)
+		// por enquanto
+		//log.SetOutput(ioutil.Discard)
 
 		myip := getMyIP("18")
 
